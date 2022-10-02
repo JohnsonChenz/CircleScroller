@@ -30,7 +30,7 @@ https://github.com/JohnsonChenz/CircleScroller/tree/master/Assets/Plugins/Circle
 1. Open you scene,find or create a canvas that you prefer to use to render your Circle Scroller,create a empty object under it.
 2. Add CircleScroller.cs on the empty object.
 3. **\*\*Important\*\*** Choose you canvas find type on the inspector (Find with tag or name).
-4. **\*\*Important\*\*** Set the Canvas Find Name according to on your canvas find type (Find by tag = canvas's tag name, name = canvas's gameobject name)
+4. **\*\*Important\*\*** Set the Canvas Find Name according to your canvas find type (Find by tag = canvas's tag name, name = canvas's gameobject name)
 5. **\*\*Important\*\*** Assign you circle button prefab to the Circle Button Prefab field.
 6. Modified the rest of the values based on your need. (I Suggesting user to modified them in in playmode to see actual display)
 
