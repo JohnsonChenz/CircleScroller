@@ -2,10 +2,12 @@
 # CircleScroller for Unity
 A plugin that allows you create gui button with circle layout.
 
+<img src="https://github.com/JohnsonChenz/CircleScroller/blob/master/Docs/ShowCase.gif" height="50%" width="50%"/>
+
 ### Install via git URL
 Add url below to Package Manager.
 ``` 
-
+https://github.com/JohnsonChenz/CircleScroller.git?path=Assets/Plugins/CircleScroller
 ```
 
 ## Features:
