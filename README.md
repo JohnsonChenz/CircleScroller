@@ -15,6 +15,8 @@ https://github.com/JohnsonChenz/CircleScroller.git?path=Assets/Plugins/CircleScr
 - Works on canvas with all render mode(Overlay/Camera/Workd Space).
 
 ## Example:
+https://github.com/JohnsonChenz/CircleScroller/tree/master/Assets/Plugins/CircleScroller/Samples~/CircleScrollerExample
+**Example is also importable in package**
 
 ## Quick Setup:
 
