@@ -1,0 +1,21 @@
+{
+  "name": "com.unity.circlescroller",
+  "displayName": "CircleScroller",
+  "description": "A plugin that allows you create gui button with circle layout.",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "license": "MIT",
+  "dependencies": {},
+  "keywords": ["circle", "scroller", "circlescroller"],
+  "category": "Circle Scroller",
+  "author": {
+  	"name": "johnsonchen"
+  },
+  "samples": [
+    {
+      "displayName": "Circle Scroller Sample",
+      "description": "This sample demonstrates how to simply setup circle scroller",
+      "path": "Samples~"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+	"displayName": "Circle Scroller Sample",
+	"description": "This sample demonstrates how to simply setup circle scroller.",
+	"createSeparatePackage": false
+}

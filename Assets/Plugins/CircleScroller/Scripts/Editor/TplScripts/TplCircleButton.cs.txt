@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using CircleScroll;
+using UnityEngine;
+
+public class #SCRIPTNAME#Data
+{
+
+}
+
+public class #SCRIPTNAME# : CircleButtonBase
+{
+    protected override void _InitComponents()
+    {
+        /*
+         * Init you button components here (or you can just make it public and drag)
+         */
+    }
+
+    protected override void _InitEvents()
+    {
+        /*
+         * Init you button components's event such as click or something here
+         */
+
+        /*
+         * Register Circle Button callbacks
+         */
+
+        //this._RegisterClickCallback(() =>
+        //{
+
+        //});
+
+        //this._RegisterDistanceUpdateCallback((distance) =>
+        //{
+
+        //});
+
+        //this._RegisterInRangeCallback(() =>
+        //{
+
+        //});
+
+        //this._RegisterOutRangeCallback(() =>
+        //{
+
+        //});
+
+        //this._RegisterSelectedCallback(() =>
+        //{
+
+        //});
+    }
+
+    protected override void _InitDisplay()
+    {
+        #SCRIPTNAME#Data buttonData = this.buttonData as #SCRIPTNAME#Data;
+
+        /*
+         * Init your button display with your custom button data here
+         */
+    }
+}
