@@ -16,6 +16,7 @@ https://github.com/JohnsonChenz/CircleScroller.git?path=Assets/Plugins/CircleScr
 
 ## Example:
 https://github.com/JohnsonChenz/CircleScroller/tree/master/Assets/Plugins/CircleScroller/Samples~/CircleScrollerExample
+
 **Example is also importable in package**
 
 ## Quick Setup:
