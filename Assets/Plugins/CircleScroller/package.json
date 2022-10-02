@@ -15,7 +15,7 @@
     {
       "displayName": "Circle Scroller Sample",
       "description": "This sample demonstrates how to simply setup circle scroller",
-      "path": "Samples~"
+      "path": "Samples/CircleScrollerExample"
     }
   ]
 }
