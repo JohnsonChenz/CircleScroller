@@ -12,7 +12,7 @@ https://github.com/JohnsonChenz/CircleScroller.git?path=Assets/Plugins/CircleScr
 
 ## Features:
 - Drag control with Mouse/Touch is supported.
-- Works on canvas with all render mode(Overlay/Camera/Workd Space).
+- Works on canvas with all render mode(Overlay/Camera/World Space).
 
 ## Example:
 https://github.com/JohnsonChenz/CircleScroller/tree/master/Assets/Plugins/CircleScroller/Samples~/CircleScrollerExample
