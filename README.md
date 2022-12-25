@@ -40,9 +40,9 @@ private CircleScroller _circleScroller;
 
 privtae void _InitCircleScrollerExample()
 {
-    // List used to contains circle button data
-    List<CircleButtonExampleData> circleButtonDatas = new List<CircleButtonExampleData>();
-    
+    // Clear data and display first (Optional)
+    this._circleScroller.Clear();
+
     // Create 5 Circle Button
     for (int i = 0; i < 5; i++)
     {
@@ -53,12 +53,12 @@ privtae void _InitCircleScrollerExample()
         * Setup your custom circle button data...
         */
         
-        // Add circle button data into list
-        circleButtonDatas.Add(yourCustomCircleButtonData);
+        // Add circle button data into CircleScroller
+        this._circleScroller.Add(yourCustomCircleButtonData);
     }
     
-    // Init Circle Scroller by assigning list of circle button data into it
-    this._circleScroller.Init(circleButtonDatas);
+    // Refresh CircleScroller display based on your set-up data.
+    this._circleScroller.Refresh();
     
     // Snap to target circle button by specific button index (The index depends on the order of Circle Button List)
     this._circleScroller.SnapToCenter(0);

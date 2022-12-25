@@ -47,6 +47,7 @@ namespace CircleScroll
         public bool enableDrag = true;
 
         public List<CircleButtonBase> circleButtons { get; private set; }  // 轉盤按鈕物件List
+        public List<object> circleButtonDatas { get; private set; }        // 轉盤按鈕物件資料
         public UnityAction<int> snapEvt { get; private set; }              // 按鈕Snap事件
         public int currentSelectedBtnIndex { get; private set; }           // 當前被選中的按鈕Index
 
@@ -58,54 +59,86 @@ namespace CircleScroll
         private const float minSnapUpdateTime = 3;                         // 按鈕自動定位最小更新次數
         private const float maxSnapUpdateTime = 10;                        // 按鈕自動定位最大更新次數
 
-        private bool initFlag;                                             // 是否完成初始
+        private bool initialized;                                             // 是否完成初始
 
 #if UNITY_EDITOR
         private bool updateFlag;                                           // 是否需要刷新顯示 (用於Inspector調整參數時)
 #endif
 
-        /// <summary>
-        /// 初始化轉盤按鈕組件
-        /// </summary>
-        /// <param name="buttonDatas">轉盤按鈕顯示資料List</param>
-        public void Init<T>(List<T> buttonDatas)
+        public CircleScroller()
         {
-            if (buttonDatas.Count < 1) return;
+            this.initialized = false;
+        }
 
-            // 標記初始未完成
-            this.initFlag = false;
-
-            // 重設相關設置及顯示
-            this._Reset();
-            this._ClearUI();
+        public void Init()
+        {
+            if (this.initialized) return;
 
             // 初始設置Canvas，如果設置失敗就不運行轉盤UI
             if (!this._InitCanvas()) return;
 
             // 設置滑動點擊事件
-            this.snapEvt = (index) =>
-            {
-                this.isSnapping = true;
-                this.SnapToCenter(index);
-            };
+            this.snapEvt = (index) => this.SnapToCenter(index);
 
-            // 重新初始化按鈕存放List
+            this.circleButtonDatas = new List<object>();
             this.circleButtons = new List<CircleButtonBase>();
 
+            // 標記初始已完成，可開始做Update
+            this.initialized = true;
+        }
+
+        public void Add(object data, bool withRefresh = false)
+        {
+            if (!this.initialized) this.Init();
+
+            this.circleButtonDatas.Add(data);
+
+            if (withRefresh) this.Refresh();
+        }
+
+        public void Remove(int index, bool withRefresh = false)
+        {
+            if (!this.initialized) this.Init();
+
+            if (this.circleButtonDatas.Count == 0) return;
+
+            this.circleButtonDatas.RemoveAt(index);
+
+            if (withRefresh) this.Refresh();
+        }
+
+        public void Clear()
+        {
+            if (!this.initialized) this.Init();
+
+            this.circleButtonDatas.Clear();
+
+            this.Refresh();
+        }
+
+        public void Refresh()
+        {
+            if (!this.initialized) this.Init();
+
+            // 重設相關設置及顯示
+            this._Reset();
+
+            if (this.circleButtonDatas.Count == 0) return;
+
             // 依據按鈕數量計算出平均弧度
-            float averageRad = Mathf.PI * 2 / buttonDatas.Count;
+            float averageRad = Mathf.PI * 2 / this.circleButtonDatas.Count;
 
             // 弧度參數，從0開始
             float addRad = 0;
 
-            for (int i = 0; i < buttonDatas.Count; i++)
+            for (int i = 0; i < this.circleButtonDatas.Count; i++)
             {
                 CircleButtonBase circleButton = this._GetAndInstantiateCircleButton();
 
                 if (circleButton == null) return;
 
                 // 初始化轉盤按鈕
-                circleButton.Init(this, i, buttonDatas[i]);
+                circleButton.Init(this, i, this.circleButtonDatas[i]);
 
                 // 依照初始弧度設置按鈕位置
                 circleButton.AddRad(addRad);
@@ -116,9 +149,6 @@ namespace CircleScroll
                 // 將處理好的按鈕加至列表中
                 this.circleButtons.Add(circleButton);
             }
-
-            // 標記初始已完成，可開始做Update
-            this.initFlag = true;
         }
 
         /// <summary>
@@ -129,7 +159,7 @@ namespace CircleScroll
         {
             this.StopAllCoroutines();
 
-            if (!this.initFlag)
+            if (!this.initialized)
             {
                 Debug.Log("初始未完成，無法執行SnapToCenter");
                 return;
@@ -144,7 +174,7 @@ namespace CircleScroll
         /// <param name="target">目標按鈕</param>
         public void JumpToCenter(int index)
         {
-            if (!this.initFlag)
+            if (!this.initialized)
             {
                 Debug.Log("初始未完成，無法執行JumpToCenter");
                 return;
@@ -185,6 +215,8 @@ namespace CircleScroll
         /// </summary>
         public void Release()
         {
+            this._Reset();
+
             this.circleButtons = null;
             this.mainCanvas = null;
         }
@@ -257,6 +289,8 @@ namespace CircleScroll
                 Debug.Log("無法取得轉盤按鈕");
                 yield break;
             }
+
+            this.isSnapping = true;
 
             // 將中心點弧減去按鈕弧度，校正後得出要偏移的弧度量
             float radDistance = this.LimitRadBetweenPositivePIAndNegativePI(this.centerRad - targetCircleButton.rad);
@@ -440,22 +474,16 @@ namespace CircleScroll
         }
 
         /// <summary>
-        /// 重新設置參數
+        /// 重新設置參數及顯示
         /// </summary>
         private void _Reset()
         {
-            this.circleButtons = null;
-            this.mainCanvas = null;
             this.isSnapping = false;
             this.curMosuePosition = Vector3.zero;
             this.preMousePosition = Vector3.zero;
-        }
 
-        /// <summary>
-        /// 清空UI相關顯示
-        /// </summary>
-        private void _ClearUI()
-        {
+            this.circleButtons.Clear();
+
             if (this.container.childCount > 0)
             {
                 foreach (Transform obj in this.container)
@@ -489,7 +517,7 @@ namespace CircleScroll
 
         private bool _AbleToDrag()
         {
-            return (!this.isSnapping && this.circleButtons?.Count > 0 && this.initFlag && this.enableDrag);
+            return (!this.isSnapping && this.circleButtons?.Count > 0 && this.initialized && this.enableDrag);
         }
 
         private void OnDestroy()
@@ -500,12 +528,12 @@ namespace CircleScroll
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (this.initFlag) this.updateFlag = true;
+            if (this.initialized) this.updateFlag = true;
         }
 
         private void LateUpdate()
         {
-            if (this.initFlag && this.updateFlag)
+            if (this.initialized && this.updateFlag)
             {
                 this.updateFlag = false;
                 this.JumpToCenter(0);
